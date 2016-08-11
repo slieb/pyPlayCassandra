@@ -1,8 +1,14 @@
 from cassandra.cluster import Cluster
 
-# set up cluster and connect to Cassandra instance
+# set up base driver cluster
 cluster = Cluster()
-session = cluster.connect('demo')
+
+# try to connect to local instance of Cassandra
+try:
+    session = cluster.connect('demo')
+except Exception as e:
+    print "Connection failed:\n\t", e
+    exit (0)
 
 # update users table with new record
 session.execute("""
